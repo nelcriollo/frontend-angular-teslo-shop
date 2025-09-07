@@ -1,0 +1,17 @@
+<label
+  class="input input-bordered flex items-center gap-2"
+  [class.input-error]="hasError">
+
+  <input
+    type="text"
+    [placeholder]="placeholder()"
+    [value]="value"
+    [disabled]="disabled"
+    class="grow w-full"
+    (input)="onInputChange($event)"
+    (blur)="onBlur()" />
+
+  @if (hasError) {
+    <form-error-label [control]="control!"></form-error-label>
+  }
+</label>

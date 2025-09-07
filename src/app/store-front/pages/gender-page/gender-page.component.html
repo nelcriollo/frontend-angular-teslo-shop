@@ -1,1 +1,26 @@
-<p>gender-page works!</p>
+
+@if ( rxResourceProductsGender.isLoading()) {
+  <div class=" flex justify-center items-center h-screen">
+<span class="loading loading-spinner loading-lg"></span>
+</div>
+}
+
+@if (rxResourceProductsGender.hasValue()) {
+  <h1 class="text-3xl font-bold ">
+  {{ (rxResourceProductsGender.value()?.products?.length) | i18nPlural: productCountMap | titlecase}}
+  para
+  <span class="text-3xl font-bold  text-accent">
+    {{(rxResourceProductsGender.value()?.products?.at(0)?.gender) | i18nSelect: genderMap | titlecase}}
+  </span>
+  </h1>
+  <h2 class="text-xl mb-5">Para todos los gustos</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+  @for(product of rxResourceProductsGender.value()?.products ?? []; track $index) {
+    <product-card [producto]="product"></product-card>
+  }
+</div>
+<app-pagination [currentPage]="currentPage()" [pages]="rxResourceProductsGender.value()?.pages ?? 0"></app-pagination>
+}
+
+

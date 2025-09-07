@@ -25,12 +25,12 @@
           <a routerLink="/gender/women" routerLinkActive="text-secondary" class="btn btn-ghost">Mujeres</a>
         </li>
         <li>
-          <a routerLink="/gender/kids" routerLinkActive="text-secondary" class="btn btn-ghost">Kids</a>
+          <a routerLink="/gender/kid" routerLinkActive="text-secondary" class="btn btn-ghost">Kids</a>
         </li>
 
       </ul>
     </div>
-    <a class="btn btn-ghost text-xl font-montserrat">Teslo
+    <a class="btn btn-ghost text-xl font-montserrat" routerLink="/">Teslo
       <span class="text-secondary">|Shop</span></a>
   </div>
   <div class="navbar-center hidden lg:flex">
@@ -42,11 +42,40 @@
           <a routerLink="/gender/women" routerLinkActive="text-secondary" class="btn btn-ghost">Mujeres</a>
         </li>
         <li>
-          <a routerLink="/gender/kids" routerLinkActive="text-secondary" class="btn btn-ghost">Kids</a>
+          <a routerLink="/gender/kid" routerLinkActive="text-secondary" class="btn btn-ghost">Kids</a>
         </li>
     </ul>
   </div>
+
+  @if(isAuthenticated()){
   <div class="navbar-end">
-    <a class="btn">Button</a>
+    <div class="flex-none gap-2">
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar bg-sky-600 ">
+          <div class="rounded-full">
+            <span class=" text-xl text-center text-white font-montserrat">{{ authService.user()?.fullName ?? '' | uppercase
+              | initials }}</span>
+          </div>
+        </div>
+        <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+          @if (isAdmin()) {
+          <li>
+            <a class="justify-between" routerLink="/admin">
+              Ir al Panel
+              <span class="badge bg-secondary text-white">Rol admin</span>
+            </a>
+          </li>
+          }
+          <li><span>{{ authService.user()?.fullName | titlecase}}</span></li>
+          <li><a (click)="authService.logout()" class="text-accent" routerLink="/auth/logout">Logout</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
+  }@else if(isNotAuthenticated()){
+  <div class="navbar-end gap-2">
+    <a class="btn btn-secondary " routerLink="/auth/login">Login</a>
+  </div>
+  }
+
 </div>

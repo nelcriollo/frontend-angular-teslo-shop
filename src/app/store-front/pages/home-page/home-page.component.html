@@ -1,9 +1,21 @@
+
+@if ( productsResource.isLoading()) {
+  <div class=" flex justify-center items-center h-screen">
+<span class="loading loading-spinner loading-lg"></span>
+</div>
+}
+
+@if (productsResource.hasValue()) {
 <h1 class="text-3xl font-bold font-montserrat">Todos los productos</h1>
 <h2 class="text-xl mb-5">Para todos los gustos</h2>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-  @for(item of products(); track $index) {
-    <product-card></product-card>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+  @for(product of productsResource.value()?.products ?? []; track $index) {
+    <product-card [producto]="product"></product-card>
   }
 </div>
+<app-pagination [currentPage]="currentPage()" [pages]="productsResource.value()?.pages ??0"></app-pagination>
+}
+
+
 
